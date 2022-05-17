@@ -3,6 +3,7 @@ package com.patrykkosieradzki.todoist.wear.tile
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.patrykkosieradzki.todoist.wear.tile.theme.WearAppTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -10,7 +11,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppContent()
+            WearAppTheme {
+                AppContent()
+            }
         }
     }
 }
