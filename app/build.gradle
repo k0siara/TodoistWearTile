@@ -54,6 +54,10 @@ dependencies {
     implementation "androidx.wear.compose:compose-foundation:$wear_compose_version"
     implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
 
+    // Horologist
+    implementation "androidx.wear.tiles:tiles:1.1.0-alpha06"
+    implementation "com.google.android.horologist:horologist-tiles:0.0.19"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.wear:wear:1.2.0'

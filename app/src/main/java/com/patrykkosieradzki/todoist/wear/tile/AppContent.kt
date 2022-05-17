@@ -1,11 +1,17 @@
 package com.patrykkosieradzki.todoist.wear.tile
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.ButtonDefaults
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
@@ -20,7 +26,11 @@ fun AppContent() {
 
     Scaffold(
         timeText = {
-            Text(text = "timeText")
+            Text(
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                text = "time?"
+            )
         },
         vignette = {
             Vignette(vignettePosition = VignettePosition.TopAndBottom)
@@ -34,13 +44,40 @@ fun AppContent() {
         ScalingLazyColumn(
             modifier = Modifier.fillMaxSize(),
             autoCentering = AutoCenteringParams(itemIndex = 0),
+            horizontalAlignment = Alignment.CenterHorizontally,
             state = listState
         ) {
             item {
-                Text(text = "someText")
-                Button(onClick = { }) {
-                    Text(text = "someButton")
+                Text(
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary,
+                    text = "Tekst test 123"
+                )
+            }
+            item {
+                Button(
+                    modifier = Modifier.size(ButtonDefaults.DefaultButtonSize),
+                    onClick = { }
+                ) {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "someButton"
+                    )
                 }
+            }
+            item {
+                Text(
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary,
+                    text = "Tekst test 123"
+                )
+            }
+            item {
+                Text(
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary,
+                    text = "Tekst test 123"
+                )
             }
         }
     }
