@@ -6,7 +6,6 @@ import androidx.wear.tiles.ColorBuilders.argb
 import androidx.wear.tiles.DeviceParametersBuilders
 import androidx.wear.tiles.LayoutElementBuilders.Column
 import androidx.wear.tiles.LayoutElementBuilders.FontStyles
-import androidx.wear.tiles.LayoutElementBuilders.Layout
 import androidx.wear.tiles.LayoutElementBuilders.LayoutElement
 import androidx.wear.tiles.LayoutElementBuilders.Text
 import androidx.wear.tiles.ModifiersBuilders.Clickable
@@ -14,28 +13,35 @@ import androidx.wear.tiles.ModifiersBuilders.Modifiers
 import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.ResourceBuilders.Resources
 import androidx.wear.tiles.TileBuilders
-import androidx.wear.tiles.TimelineBuilders.Timeline
-import androidx.wear.tiles.TimelineBuilders.TimelineEntry
 import com.google.android.horologist.tiles.CoroutinesTileService
 import com.patrykkosieradzki.todoist.wear.tile.R
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.LayoutBuilder.buildLayout
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TileBuilder.buildTile
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TileBuilder.setResourcesVersion
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TileBuilder.setTimeline
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TimelineBuilder.addTimelineEntry
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TimelineBuilder.buildTimeline
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TimelineEntryBuilder.buildTimelineEntry
+import com.patrykkosieradzki.todoist.wear.tile.tiles.TilesDsl.TimelineEntryBuilder.setLayout
 
 private const val RESOURCES_VERSION = "1"
 
 class TodoistWearTile : CoroutinesTileService() {
     override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): TileBuilders.Tile {
-        return TileBuilders.Tile.Builder()
-            .setResourcesVersion(RESOURCES_VERSION)
-            .setTimeline(
-                Timeline.Builder()
-                    .addTimelineEntry(
-                        TimelineEntry.Builder()
-                            .setLayout(
-                                Layout.Builder()
-                                    .setRoot(layout(requestParams.deviceParameters!!))
-                                    .build()
-                            ).build()
-                    ).build()
-            ).build()
+        return buildTile {
+            setResourcesVersion { RESOURCES_VERSION }
+            setTimeline {
+                buildTimeline {
+                    addTimelineEntry {
+                        buildTimelineEntry {
+                            setLayout {
+                                buildLayout { setRoot(layout(requestParams.deviceParameters!!)) }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun layout(
