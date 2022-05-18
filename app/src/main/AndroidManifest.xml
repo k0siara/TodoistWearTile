@@ -35,6 +35,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="androidx.wear.activity.ConfirmationActivity">
+        </activity>
+
         <service
             android:name=".tiles.TodoistWearTile"
             android:label="@string/app_name"

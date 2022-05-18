@@ -1,84 +1,44 @@
 package com.patrykkosieradzki.todoist.wear.tile
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.AutoCenteringParams
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.PositionIndicator
-import androidx.wear.compose.material.Scaffold
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.Vignette
-import androidx.wear.compose.material.VignettePosition
-import androidx.wear.compose.material.rememberScalingLazyListState
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
+
+private object AppRoutes {
+    const val splashScreen = "/splash"
+    const val loginScreen = "/login"
+}
 
 @Composable
 fun AppContent() {
-    val listState = rememberScalingLazyListState()
+    val navController = rememberSwipeDismissableNavController()
 
-    Scaffold(
-        timeText = {
-            Text(
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                text = "time?"
-            )
-        },
-        vignette = {
-            Vignette(vignettePosition = VignettePosition.TopAndBottom)
-        },
-        positionIndicator = {
-            PositionIndicator(
-                scalingLazyListState = listState
+    SwipeDismissableNavHost(
+        navController = navController,
+        startDestination = AppRoutes.splashScreen,
+    ) {
+        composable(
+            route = AppRoutes.splashScreen
+        ) {
+            SplashScreen(
+                navigateToLogin = {
+                    navController.navigate(AppRoutes.loginScreen) {
+                        popUpTo(AppRoutes.splashScreen) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
-    ) {
-        ScalingLazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            autoCentering = AutoCenteringParams(itemIndex = 0),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            state = listState
+
+        composable(
+            route = AppRoutes.loginScreen
         ) {
-            item {
-                Text(
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary,
-                    text = "Tekst test 123"
-                )
-            }
-            item {
-                Button(
-                    modifier = Modifier.size(ButtonDefaults.DefaultButtonSize),
-                    onClick = { }
-                ) {
-                    Text(
-                        modifier = Modifier.fillParentMaxWidth(),
-                        text = "someButton"
-                    )
-                }
-            }
-            item {
-                Text(
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary,
-                    text = "Tekst test 123"
-                )
-            }
-            item {
-                Text(
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary,
-                    text = "Tekst test 123"
-                )
-            }
+            LoginScreen()
         }
     }
 }
