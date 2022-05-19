@@ -74,6 +74,13 @@ dependencies {
     implementation "androidx.wear.tiles:tiles:1.1.0-alpha06"
     implementation "com.google.android.horologist:horologist-tiles:0.0.19"
 
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "com.squareup.moshi:moshi-adapters:1.13.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.wear:wear:1.2.0'

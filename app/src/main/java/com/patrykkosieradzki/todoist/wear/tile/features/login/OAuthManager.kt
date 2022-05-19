@@ -35,17 +35,19 @@ class OAuthManager @Inject constructor(
 
     private val remoteAuthClient = RemoteAuthClient.create(context)
 
-    suspend fun authorize(): AuthorizationStatus {
-        val codeToVerify = UUID.randomUUID().toString()
+    suspend fun authorize(
+        clientId: String,
+        verificationCode: String
+    ): AuthorizationStatus {
         val oauthUriStr = OAUTH_AUTHORIZE_URL_TEMPLATE.format(
             READ_WRITE_SCOPE,
-            codeToVerify
+            verificationCode
         )
 
         val request = OAuthRequest.Builder(context)
             .setAuthProviderUrl(Uri.parse(oauthUriStr))
-            .setClientId(CLIENT_ID)
-            .setCodeChallenge(CodeChallenge(CodeVerifier(codeToVerify)))
+            .setClientId(clientId)
+            .setCodeChallenge(CodeChallenge(CodeVerifier(verificationCode)))
             .build()
 
         return suspendCancellableCoroutine { continuation ->
@@ -64,7 +66,7 @@ class OAuthManager @Inject constructor(
                             val code = url.getQueryParameter(CODE_QUERY_PARAM)
                                 ?: throw IllegalStateException()
 
-                            if (state != codeToVerify) {
+                            if (state != verificationCode) {
                                 throw IllegalStateException()
                             }
                             continuation.resume(AuthorizationStatus.Success(code))
@@ -109,7 +111,6 @@ class OAuthManager @Inject constructor(
     companion object {
         private const val OAUTH_AUTHORIZE_URL_TEMPLATE =
             "https://todoist.com/oauth/authorize?scope=%s&state=%s"
-        private const val CLIENT_ID = "2bca0375698b4ef393d19a88a024e66b"
         private const val READ_WRITE_SCOPE = "data:read_write"
         private const val STATE_QUERY_PARAM = "state"
         private const val CODE_QUERY_PARAM = "code"
