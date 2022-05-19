@@ -71,11 +71,9 @@ fun LoginScreen(
                         )
                     },
                     onClick = {
+                        viewModel.onLoginClicked()
                         context.showConfirmationOverlay(
-                            message = "See your phone",
-                            onAnimationFinished = {
-
-                            }
+                            message = "Open your phone to authorize"
                         )
                     }
                 )
