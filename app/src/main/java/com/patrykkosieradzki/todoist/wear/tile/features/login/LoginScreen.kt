@@ -1,6 +1,7 @@
 package com.patrykkosieradzki.todoist.wear.tile.features.login
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -8,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
@@ -17,8 +19,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
-import androidx.wear.widget.ConfirmationOverlay
-import com.patrykkosieradzki.todoist.wear.tile.findActivity
+import com.patrykkosieradzki.todoist.wear.tile.extensions.showConfirmationOverlay
 
 
 @Composable
@@ -60,28 +61,22 @@ fun LoginScreen(
             }
             item {
                 Chip(
+                    modifier = Modifier.padding(top = 10.dp),
                     label = {
                         Text(
                             modifier = Modifier.fillParentMaxWidth(),
-                            text = "Login on phone",
+                            text = "Login",
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     },
                     onClick = {
-                        context.findActivity()?.let { activity ->
-                            val message: CharSequence = "Continue on phone..."
+                        context.showConfirmationOverlay(
+                            message = "See your phone",
+                            onAnimationFinished = {
 
-                            ConfirmationOverlay()
-                                .setType(ConfirmationOverlay.OPEN_ON_PHONE_ANIMATION)
-                                .setDuration(1500)
-                                .setMessage(message)
-                                .setOnAnimationFinishedListener {
-                                    // What should be done here?
-                                }.showOn(activity)
-                        }
-
-
+                            }
+                        )
                     }
                 )
             }
