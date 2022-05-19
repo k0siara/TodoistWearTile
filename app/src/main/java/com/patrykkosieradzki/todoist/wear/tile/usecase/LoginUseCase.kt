@@ -1,22 +1,20 @@
-package com.patrykkosieradzki.todoist.wear.tile.features.login
+package com.patrykkosieradzki.todoist.wear.tile.usecase
 
 import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.WearException
+import com.patrykkosieradzki.todoist.wear.tile.auth.OAuthManager
+import com.patrykkosieradzki.todoist.wear.tile.repository.TokenRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val oAuthManager: OAuthManager,
     private val tokenRepository: TokenRepository,
     private val wearAppConfiguration: WearAppConfiguration,
-    private val verificationCodeGenerator: VerificationCodeGenerator
-) {
+
+    ) {
     suspend fun invoke() {
         try {
-            val verificationCode = verificationCodeGenerator.createVerificationCode()
-            val authStatus = oAuthManager.authorize(
-                clientId = wearAppConfiguration.todoistClientId,
-                verificationCode = verificationCode
-            )
+            val authStatus = oAuthManager.authorize(wearAppConfiguration.todoistClientId)
             when (authStatus) {
                 OAuthManager.AuthorizationStatus.PhoneUnavailable -> {
                     throw WearException.PhoneUnavailableException()
@@ -28,7 +26,7 @@ class LoginUseCase @Inject constructor(
                     val accessToken = tokenRepository.getAccessToken(
                         clientId = wearAppConfiguration.todoistClientId,
                         clientSecret = wearAppConfiguration.todoistClientSecret,
-                        code = verificationCode
+                        code = authStatus.code
                     )
                     // store access token
                     // success :)

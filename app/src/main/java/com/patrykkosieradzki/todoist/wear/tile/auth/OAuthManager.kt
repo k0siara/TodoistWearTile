@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.features.login
+package com.patrykkosieradzki.todoist.wear.tile.auth
 
 import android.content.Context
 import android.net.Uri
@@ -8,7 +8,6 @@ import androidx.wear.phone.interactions.authentication.OAuthRequest
 import androidx.wear.phone.interactions.authentication.OAuthResponse
 import androidx.wear.phone.interactions.authentication.RemoteAuthClient
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.UUID
 import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,7 +17,8 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Singleton
 class OAuthManager @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val verificationCodeGenerator: VerificationCodeGenerator
 ) {
     sealed class AuthorizationStatus {
         data class Success(val code: String) : AuthorizationStatus()
@@ -35,10 +35,8 @@ class OAuthManager @Inject constructor(
 
     private val remoteAuthClient = RemoteAuthClient.create(context)
 
-    suspend fun authorize(
-        clientId: String,
-        verificationCode: String
-    ): AuthorizationStatus {
+    suspend fun authorize(clientId: String): AuthorizationStatus {
+        val verificationCode = verificationCodeGenerator.createVerificationCode()
         val oauthUriStr = OAUTH_AUTHORIZE_URL_TEMPLATE.format(
             READ_WRITE_SCOPE,
             verificationCode

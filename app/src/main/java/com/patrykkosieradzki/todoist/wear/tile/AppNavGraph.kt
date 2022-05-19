@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
@@ -14,6 +15,7 @@ import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashViewModel
 private object AppRoutes {
     const val splashScreen = "/splash"
     const val loginScreen = "/login"
+    const val homeScreen = "/home"
 }
 
 @Composable
@@ -44,7 +46,22 @@ fun AppNavGraph() {
             route = AppRoutes.loginScreen
         ) {
             val viewModel = hiltViewModel<LoginViewModel>()
-            LoginScreen(viewModel = viewModel)
+            LoginScreen(
+                viewModel = viewModel,
+                navigateToHome = {
+                    navController.navigate(AppRoutes.homeScreen) {
+                        popUpTo(AppRoutes.loginScreen) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = AppRoutes.homeScreen
+        ) {
+            HomeScreen()
         }
     }
 }

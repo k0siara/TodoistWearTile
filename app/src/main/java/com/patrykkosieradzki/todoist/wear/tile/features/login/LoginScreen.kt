@@ -3,6 +3,8 @@ package com.patrykkosieradzki.todoist.wear.tile.features.login
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,16 +21,26 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.patrykkosieradzki.composer.composables.ComposerFlowEventHandler
 import com.patrykkosieradzki.todoist.wear.tile.extensions.showConfirmationOverlay
-
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
+    navigateToHome: () -> Unit
 ) {
+    val currentNavigateToHome by rememberUpdatedState(newValue = navigateToHome)
+
     val context = LocalContext.current
     val listState = rememberScalingLazyListState()
+
+    ComposerFlowEventHandler(
+        event = viewModel.navigateToHomeEvent,
+        handleEvent = { _, _ ->
+            currentNavigateToHome.invoke()
+        }
+    )
 
     Scaffold(
         timeText = {

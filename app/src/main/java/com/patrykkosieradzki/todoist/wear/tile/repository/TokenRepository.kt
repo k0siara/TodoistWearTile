@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.features.login
+package com.patrykkosieradzki.todoist.wear.tile.repository
 
 import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.network.GetAccessTokenRequest
