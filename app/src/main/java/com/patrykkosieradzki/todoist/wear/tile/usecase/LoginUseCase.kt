@@ -3,19 +3,19 @@ package com.patrykkosieradzki.todoist.wear.tile.usecase
 import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.WearException
 import com.patrykkosieradzki.todoist.wear.tile.auth.OAuthManager
+import com.patrykkosieradzki.todoist.wear.tile.auth.TokenStorage
 import com.patrykkosieradzki.todoist.wear.tile.repository.TokenRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val oAuthManager: OAuthManager,
     private val tokenRepository: TokenRepository,
+    private val tokenStorage: TokenStorage,
     private val wearAppConfiguration: WearAppConfiguration,
-
-    ) {
+) {
     suspend fun invoke() {
         try {
-            val authStatus = oAuthManager.authorize(wearAppConfiguration.todoistClientId)
-            when (authStatus) {
+            when (val authStatus = oAuthManager.authorize(wearAppConfiguration.todoistClientId)) {
                 OAuthManager.AuthorizationStatus.PhoneUnavailable -> {
                     throw WearException.PhoneUnavailableException()
                 }
@@ -28,8 +28,7 @@ class LoginUseCase @Inject constructor(
                         clientSecret = wearAppConfiguration.todoistClientSecret,
                         code = authStatus.code
                     )
-                    // store access token
-                    // success :)
+                    tokenStorage.accessToken = accessToken
                 }
             }
         } catch (we: WearException) {
