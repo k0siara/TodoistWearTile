@@ -1,7 +1,5 @@
 package com.patrykkosieradzki.todoist.wear.tile.features.login
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,7 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.wear.activity.ConfirmationActivity
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
@@ -20,18 +17,14 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
-import androidx.wear.phone.interactions.authentication.CodeChallenge
-import androidx.wear.phone.interactions.authentication.CodeVerifier
-import androidx.wear.phone.interactions.authentication.OAuthRequest
-import androidx.wear.phone.interactions.authentication.OAuthResponse
-import androidx.wear.phone.interactions.authentication.RemoteAuthClient
 import androidx.wear.widget.ConfirmationOverlay
 import com.patrykkosieradzki.todoist.wear.tile.findActivity
 
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel
 ) {
     val context = LocalContext.current
     val listState = rememberScalingLazyListState()

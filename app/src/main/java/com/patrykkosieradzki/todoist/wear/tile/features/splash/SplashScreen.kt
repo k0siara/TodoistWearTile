@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
+    viewModel: SplashViewModel,
     navigateToLogin: () -> Unit
 ) {
     val currentNavigateToLogin by rememberUpdatedState(newValue = navigateToLogin)
