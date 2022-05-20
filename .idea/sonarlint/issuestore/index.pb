@@ -3,8 +3,6 @@
 Tapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/theme/WearAppTypography.kt,b/4/b4de7cc50cad3957266d0e9d0ba5a61b3d862158
 
 Oapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/theme/WearAppTheme.kt,8/d/8dac13f1e279f21d7e1ef342d8cd101f225af989
-x
-Happ/src/main/java/com/patrykkosieradzki/todoist/wear/tile/theme/Color.kt,d/b/db8fff1bf84a7f07ffb4ae409f1e9d5bd28d4dbf
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
 {
@@ -19,8 +17,6 @@ A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 ‰
 Yapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/splash/SplashScreen.kt,1/2/1278d8c1c215349d75e2bc6de771de94c1c9bc0d
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 t
@@ -43,9 +39,5 @@ y
 Iapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/MainActivity.kt,e/2/e255632aaa5f0915ebd9b5fbce7e814a5c8f16ec
 …
 Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/storage/PreferenceModule.kt,2/f/2ff0d65f654b8a13b278b26fa4c8c8f789263ce8
-†
-Vapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/storage/PreferenceManager.kt,3/2/322e27c2cf26895f42143b448a7a6d5c7516de9a
 ‡
 Wapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/repository/TokenRepository.kt,8/9/8952648c7f5eb3e02a8afbcf2c894d70fb84f693
-~
-Napp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/auth/TokenStorage.kt,b/a/baa6404bd4fa1292805d15b48a9a4e8bdfdf3528

@@ -12,6 +12,7 @@ import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistC
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
 import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
@@ -81,8 +82,18 @@ fun AppNavGraph() {
             route = AppRoutes.homeScreen,
             scrollStateBuilder = { ScalingLazyListState() }
         ) {
+            val viewModel = hiltViewModel<HomeViewModel>()
+
             HomeScreen(
-                listState = it.scrollableState
+                listState = it.scrollableState,
+                viewModel = viewModel,
+                navigateToLogin = {
+                    navController.navigate(AppRoutes.loginScreen) {
+                        popUpTo(AppRoutes.splashScreen) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

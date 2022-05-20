@@ -13,4 +13,8 @@ class TokenStorage @Inject constructor(
         set(value) {
             preferenceManager.putString("accessToken", value)
         }
+
+    fun clear() {
+        accessToken = null
+    }
 }

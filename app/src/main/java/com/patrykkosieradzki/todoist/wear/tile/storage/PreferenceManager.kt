@@ -17,4 +17,8 @@ class PreferenceManager @Inject constructor(
 
     fun getString(key: String, defaultValue: String? = null) =
         sharedPreferences.getString(key, defaultValue)
+
+    fun clear() {
+        sharedPreferences.edit { clear() }
+    }
 }
