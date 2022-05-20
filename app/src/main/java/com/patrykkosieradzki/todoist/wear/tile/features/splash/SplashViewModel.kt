@@ -2,7 +2,7 @@ package com.patrykkosieradzki.todoist.wear.tile.features.splash
 
 import androidx.lifecycle.ViewModel
 import com.patrykkosieradzki.composer.core.event.ComposerFlowEvent
-import com.patrykkosieradzki.todoist.wear.tile.usecase.IsLoggedInUseCase
+import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.IsLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

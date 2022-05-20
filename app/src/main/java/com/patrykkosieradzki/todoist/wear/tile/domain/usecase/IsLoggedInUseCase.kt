@@ -1,6 +1,6 @@
-package com.patrykkosieradzki.todoist.wear.tile.usecase
+package com.patrykkosieradzki.todoist.wear.tile.domain.usecase
 
-import com.patrykkosieradzki.todoist.wear.tile.auth.TokenStorage
+import com.patrykkosieradzki.todoist.wear.tile.domain.TokenStorage
 import javax.inject.Inject
 
 class IsLoggedInUseCase @Inject constructor(

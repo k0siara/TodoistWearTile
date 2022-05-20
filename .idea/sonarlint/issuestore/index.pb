@@ -15,18 +15,8 @@ A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
-t
-Dapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/WearApp.kt,0/1/012be0a6adf279ec2ef3161af9efff7ab60c1637
-à
-Xapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/AccessTokenResponse.kt,c/8/c8c7f9d4b648e4cf090443c0a174993516f21ddd
-Ç
-Rapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/NetworkModule.kt,3/a/3adefea0927fee4b894ed10a9b8f62c4518afefb
-}
-Mapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/TokenApi.kt,b/1/b1bfbb5893c134a7dec95c86f40d3d7cf64814d2
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-ã
-[app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/auth/VerificationCodeGenerator.kt,4/7/4748739072fa12e6096b9ec1822a251bc468d555
 Å
 Qapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/WearAppConfiguration.kt,0/9/09fa25bcb140380bcd9d1d5c368ef668b7bc7fcd
 z
@@ -35,5 +25,3 @@ y
 Iapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/MainActivity.kt,e/2/e255632aaa5f0915ebd9b5fbce7e814a5c8f16ec
 Ö
 Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/storage/PreferenceModule.kt,2/f/2ff0d65f654b8a13b278b26fa4c8c8f789263ce8
-á
-Wapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/repository/TokenRepository.kt,8/9/8952648c7f5eb3e02a8afbcf2c894d70fb84f693

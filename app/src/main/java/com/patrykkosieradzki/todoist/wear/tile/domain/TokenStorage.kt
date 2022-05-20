@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.auth
+package com.patrykkosieradzki.todoist.wear.tile.domain
 
 import com.patrykkosieradzki.todoist.wear.tile.storage.PreferenceManager
 import javax.inject.Inject

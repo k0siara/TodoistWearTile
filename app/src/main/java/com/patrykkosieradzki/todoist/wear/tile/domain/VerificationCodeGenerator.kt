@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.auth
+package com.patrykkosieradzki.todoist.wear.tile.domain
 
 import java.util.UUID
 import javax.inject.Inject

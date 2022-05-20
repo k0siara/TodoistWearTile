@@ -1,9 +1,9 @@
-package com.patrykkosieradzki.todoist.wear.tile.usecase
+package com.patrykkosieradzki.todoist.wear.tile.domain.usecase
 
 import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.WearException
 import com.patrykkosieradzki.todoist.wear.tile.auth.OAuthManager
-import com.patrykkosieradzki.todoist.wear.tile.auth.TokenStorage
+import com.patrykkosieradzki.todoist.wear.tile.domain.TokenStorage
 import com.patrykkosieradzki.todoist.wear.tile.repository.TokenRepository
 import javax.inject.Inject
 

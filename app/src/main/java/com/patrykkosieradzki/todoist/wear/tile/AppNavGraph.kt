@@ -95,7 +95,7 @@ fun AppNavGraph() {
                 viewModel = viewModel,
                 navigateToLogin = {
                     navController.navigate(AppRoutes.loginScreen) {
-                        popUpTo(AppRoutes.splashScreen) {
+                        popUpTo(AppRoutes.homeScreen) {
                             inclusive = true
                         }
                     }

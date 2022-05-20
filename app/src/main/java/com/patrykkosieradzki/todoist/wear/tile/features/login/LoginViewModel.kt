@@ -7,7 +7,7 @@ import com.patrykkosieradzki.composer.core.state.UiState
 import com.patrykkosieradzki.composer.core.state.UiStateManager
 import com.patrykkosieradzki.composer.core.state.uiStateManagerDelegate
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
-import com.patrykkosieradzki.todoist.wear.tile.usecase.LoginUseCase
+import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import timber.log.Timber
