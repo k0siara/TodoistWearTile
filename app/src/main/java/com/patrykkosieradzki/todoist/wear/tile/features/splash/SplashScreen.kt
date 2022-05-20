@@ -10,20 +10,35 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.wear.compose.material.Text
-import kotlinx.coroutines.delay
+import com.patrykkosieradzki.composer.composables.ComposerFlowEventHandler
 
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
     viewModel: SplashViewModel,
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
     val currentNavigateToLogin by rememberUpdatedState(newValue = navigateToLogin)
+    val currentNavigateToHome by rememberUpdatedState(newValue = navigateToHome)
 
     LaunchedEffect(Unit) {
-        delay(1000)
-        currentNavigateToLogin.invoke()
+        viewModel.checkLoginStatus()
     }
+
+    ComposerFlowEventHandler(
+        event = viewModel.navigateToLogin,
+        handleEvent = { _, _ ->
+            currentNavigateToLogin.invoke()
+        }
+    )
+
+    ComposerFlowEventHandler(
+        event = viewModel.navigateToHome,
+        handleEvent = { _, _ ->
+            currentNavigateToHome.invoke()
+        }
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),

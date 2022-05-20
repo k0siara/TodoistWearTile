@@ -6,10 +6,11 @@ import com.patrykkosieradzki.composer.core.event.ComposerFlowEvent
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
 import com.patrykkosieradzki.todoist.wear.tile.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import timber.log.Timber
 
 @HiltViewModel
-class HomeViewModel(
+class HomeViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 

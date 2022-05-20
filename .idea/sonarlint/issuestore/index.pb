@@ -11,12 +11,8 @@ Kapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/tiles/TilesDsl.kt,6/
 Rapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/tiles/TodoistWearTile.kt,2/6/26f9560d07a5d5faa860b2d7b7bb1ec84901219e
 7
 gradlew,5/b/5bbfa66edb4db3c7c33c5181f43510990d3307f9
-Œ
-\app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/splash/SplashViewModel.kt,c/8/c8cd8b990da0b821efddf280168cf91f184b079a
 A
 gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
-‰
-Yapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/splash/SplashScreen.kt,1/2/1278d8c1c215349d75e2bc6de771de94c1c9bc0d
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 t

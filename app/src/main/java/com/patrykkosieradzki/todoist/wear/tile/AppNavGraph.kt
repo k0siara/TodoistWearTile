@@ -5,7 +5,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.TimeText
-import androidx.wear.compose.material.rememberScalingLazyListState
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
@@ -51,6 +50,13 @@ fun AppNavGraph() {
                 viewModel = viewModel,
                 navigateToLogin = {
                     navController.navigate(AppRoutes.loginScreen) {
+                        popUpTo(AppRoutes.splashScreen) {
+                            inclusive = true
+                        }
+                    }
+                },
+                navigateToHome = {
+                    navController.navigate(AppRoutes.homeScreen) {
                         popUpTo(AppRoutes.splashScreen) {
                             inclusive = true
                         }
