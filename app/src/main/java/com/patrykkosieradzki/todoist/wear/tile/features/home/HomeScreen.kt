@@ -1,6 +1,9 @@
 package com.patrykkosieradzki.todoist.wear.tile.features.home
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
@@ -26,6 +30,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     listState: ScalingLazyListState,
     viewModel: HomeViewModel,
+    navigateToAddTask: () -> Unit,
     navigateToLogin: () -> Unit
 ) {
     val viewState by viewModel.viewState.observeAsState(HomeViewState.Empty)
@@ -39,7 +44,8 @@ fun HomeScreen(
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        state = listState
+        state = listState,
+        contentPadding = PaddingValues(horizontal = 15.dp)
     ) {
         item {
             Text(
@@ -61,9 +67,7 @@ fun HomeScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onClick = {
-
-                }
+                onClick = navigateToAddTask
             )
         }
 
@@ -81,25 +85,24 @@ fun HomeScreen(
             }
             is Async.Success -> {
                 viewState.tasks.invoke()?.let { list ->
+                    item {
+                        Spacer(modifier = Modifier.height(5.dp))
+                    }
+
                     items(
                         items = list,
                         key = null,
                         itemContent = { item ->
-                            Chip(
-                                modifier = Modifier.padding(top = 10.dp),
-                                colors = ChipDefaults.secondaryChipColors(),
-                                label = {
-                                    Text(
-                                        modifier = Modifier.fillParentMaxWidth(),
-                                        text = item.content,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                },
-                                onClick = {}
+                            TodoistTaskItemWidget(
+                                modifier = Modifier.fillParentMaxWidth(),
+                                todoistTask = item
                             )
                         }
                     )
+
+                    item {
+                        Spacer(modifier = Modifier.height(5.dp))
+                    }
                 }
             }
             is Async.Fail -> {
@@ -116,8 +119,30 @@ fun HomeScreen(
 
 
         item {
+            ListHeader(
+                modifier = Modifier.padding(top = 10.dp)
+            ) {
+                Text(
+                    modifier = Modifier.fillParentMaxWidth(),
+                    text = "Account",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             Chip(
                 modifier = Modifier.padding(top = 10.dp),
+                colors = ChipDefaults.secondaryChipColors(),
+                label = {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "Settings",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                onClick = viewModel::onLogoutClicked
+            )
+            Chip(
                 colors = ChipDefaults.secondaryChipColors(),
                 label = {
                     Text(

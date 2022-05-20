@@ -10,6 +10,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
 import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
+import com.patrykkosieradzki.todoist.wear.tile.features.addtask.AddTaskScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
@@ -21,6 +22,8 @@ private object AppRoutes {
     const val splashScreen = "/splash"
     const val loginScreen = "/login"
     const val homeScreen = "/home"
+
+    const val addTaskScreen = "/add-task"
 }
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
@@ -93,6 +96,9 @@ fun AppNavGraph() {
             HomeScreen(
                 listState = it.scrollableState,
                 viewModel = viewModel,
+                navigateToAddTask = {
+                    navController.navigate(AppRoutes.addTaskScreen)
+                },
                 navigateToLogin = {
                     navController.navigate(AppRoutes.loginScreen) {
                         popUpTo(AppRoutes.homeScreen) {
@@ -101,6 +107,12 @@ fun AppNavGraph() {
                     }
                 }
             )
+        }
+
+        composable(
+            route = AppRoutes.addTaskScreen
+        ) {
+            AddTaskScreen()
         }
     }
 }

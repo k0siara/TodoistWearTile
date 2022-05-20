@@ -56,6 +56,10 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    fun onItemChecked(item: TodoistTask) {
+//        tasksState.update { Async.Success(tasks) }
+    }
+
     fun onLogoutClicked() {
         viewModelScope.launchWithExceptionHandler(
             block = {
