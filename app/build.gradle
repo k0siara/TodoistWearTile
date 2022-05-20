@@ -74,6 +74,7 @@ dependencies {
     // Horologist
     implementation "androidx.wear.tiles:tiles:1.1.0-alpha06"
     implementation "com.google.android.horologist:horologist-tiles:0.0.19"
+    implementation "com.google.android.horologist:horologist-compose-layout:0.0.19"
 
     // Networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -86,4 +87,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.wear:wear:1.2.0'
     implementation 'androidx.wear:wear-phone-interactions:1.1.0-alpha03'
+
 }

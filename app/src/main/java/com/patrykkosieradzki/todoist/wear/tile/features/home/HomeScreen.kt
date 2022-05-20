@@ -10,6 +10,7 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
@@ -17,39 +18,20 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listState: ScalingLazyListState
 ) {
-    val listState = rememberScalingLazyListState()
-
-    Scaffold(
-        timeText = {
+    ScalingLazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        state = listState
+    ) {
+        item {
             Text(
                 textAlign = TextAlign.Center,
-                color = Color.White,
-                text = "time?"
+                color = MaterialTheme.colors.primary,
+                text = "You're logged in :)"
             )
-        },
-        vignette = {
-            Vignette(vignettePosition = VignettePosition.TopAndBottom)
-        },
-        positionIndicator = {
-            PositionIndicator(
-                scalingLazyListState = listState
-            )
-        }
-    ) {
-        ScalingLazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            state = listState
-        ) {
-            item {
-                Text(
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary,
-                    text = "You're logged in :)"
-                )
-            }
         }
     }
 }

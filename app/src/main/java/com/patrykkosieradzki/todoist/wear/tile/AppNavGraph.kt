@@ -3,9 +3,14 @@ package com.patrykkosieradzki.todoist.wear.tile
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.rememberScalingLazyListState
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
+import com.google.android.horologist.compose.navscaffold.WearNavScaffold
+import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginViewModel
@@ -18,13 +23,24 @@ private object AppRoutes {
     const val homeScreen = "/home"
 }
 
+@OptIn(ExperimentalHorologistComposeLayoutApi::class)
 @Composable
 fun AppNavGraph() {
     val navController = rememberSwipeDismissableNavController()
 
-    SwipeDismissableNavHost(
+    WearNavScaffold(
         navController = navController,
         startDestination = AppRoutes.splashScreen,
+        timeText = { timeTextModifier ->
+            when (navController.currentDestination?.route) {
+                AppRoutes.splashScreen -> {
+                    // Nothing
+                }
+                else -> {
+                    TimeText(modifier = timeTextModifier)
+                }
+            }
+        }
     ) {
         composable(
             route = AppRoutes.splashScreen
@@ -42,12 +58,15 @@ fun AppNavGraph() {
             )
         }
 
-        composable(
-            route = AppRoutes.loginScreen
+        scalingLazyColumnComposable(
+            route = AppRoutes.loginScreen,
+            scrollStateBuilder = { ScalingLazyListState() }
         ) {
             val viewModel = hiltViewModel<LoginViewModel>()
+
             LoginScreen(
                 viewModel = viewModel,
+                listState = it.scrollableState,
                 navigateToHome = {
                     navController.navigate(AppRoutes.homeScreen) {
                         popUpTo(AppRoutes.loginScreen) {
@@ -58,10 +77,13 @@ fun AppNavGraph() {
             )
         }
 
-        composable(
-            route = AppRoutes.homeScreen
+        scalingLazyColumnComposable(
+            route = AppRoutes.homeScreen,
+            scrollStateBuilder = { ScalingLazyListState() }
         ) {
-            HomeScreen()
+            HomeScreen(
+                listState = it.scrollableState
+            )
         }
     }
 }
