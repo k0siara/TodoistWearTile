@@ -16,7 +16,7 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 1000000
-        versionName "1.0.0"
+        versionName "$appVersion.major.$appVersion.minor.$appVersion.patch.$appVersion.build"
 
     }
 
@@ -24,6 +24,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+//            applicationIdSuffix '.dev'
+            def suffix = appVersion.snapshot ? '-snapshot-dev' : "-dev"
+            versionNameSuffix "$suffix${appVersion.nameSuffix}"
         }
     }
 

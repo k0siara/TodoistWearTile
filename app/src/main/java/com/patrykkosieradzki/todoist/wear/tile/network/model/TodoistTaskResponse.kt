@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.network
+package com.patrykkosieradzki.todoist.wear.tile.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

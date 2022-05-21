@@ -1,6 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
+        appVersion = [
+                'major'     : 1,
+                'minor'     : 0,
+                'patch'     : 0,
+                'build'     : 0,
+                'snapshot'  : false,
+                'nameSuffix': ""
+        ]
+
         // Dependency versions.
         activity_compose_version = '1.6.0-alpha03'
         compose_version = '1.2.0-beta02'

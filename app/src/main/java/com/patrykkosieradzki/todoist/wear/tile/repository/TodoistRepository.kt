@@ -1,8 +1,8 @@
 package com.patrykkosieradzki.todoist.wear.tile.repository
 
 import com.patrykkosieradzki.todoist.wear.tile.domain.model.TodoistTask
-import com.patrykkosieradzki.todoist.wear.tile.network.TodoistApi
-import com.patrykkosieradzki.todoist.wear.tile.network.TodoistTaskResponse
+import com.patrykkosieradzki.todoist.wear.tile.network.api.TodoistApi
+import com.patrykkosieradzki.todoist.wear.tile.network.model.TodoistTaskResponse
 import javax.inject.Inject
 
 class TodoistRepository @Inject constructor(

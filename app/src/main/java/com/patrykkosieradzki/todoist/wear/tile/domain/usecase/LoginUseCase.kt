@@ -4,12 +4,13 @@ import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.WearException
 import com.patrykkosieradzki.todoist.wear.tile.auth.OAuthManager
 import com.patrykkosieradzki.todoist.wear.tile.domain.TokenStorage
-import com.patrykkosieradzki.todoist.wear.tile.repository.TokenRepository
+import com.patrykkosieradzki.todoist.wear.tile.repository.AuthRepository
+import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val oAuthManager: OAuthManager,
-    private val tokenRepository: TokenRepository,
+    private val authRepository: AuthRepository,
     private val tokenStorage: TokenStorage,
     private val wearAppConfiguration: WearAppConfiguration,
 ) {
@@ -23,7 +24,7 @@ class LoginUseCase @Inject constructor(
                     throw WearException.UnsupportedWatchException()
                 }
                 is OAuthManager.AuthorizationStatus.Success -> {
-                    val accessToken = tokenRepository.getAccessToken(
+                    val accessToken = authRepository.getAccessToken(
                         clientId = wearAppConfiguration.todoistClientId,
                         clientSecret = wearAppConfiguration.todoistClientSecret,
                         code = authStatus.code
@@ -34,6 +35,7 @@ class LoginUseCase @Inject constructor(
         } catch (we: WearException) {
             throw we
         } catch (e: Exception) {
+            (e as? CancellationException)?.let { throw it }
             throw WearException.UnknownException(cause = e)
         }
     }

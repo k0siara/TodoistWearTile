@@ -2,6 +2,8 @@ package com.patrykkosieradzki.todoist.wear.tile.network
 
 import com.patrykkosieradzki.todoist.wear.tile.WearAppConfiguration
 import com.patrykkosieradzki.todoist.wear.tile.domain.TokenStorage
+import com.patrykkosieradzki.todoist.wear.tile.network.api.TodoistApi
+import com.patrykkosieradzki.todoist.wear.tile.network.api.TodoistTokenApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +34,6 @@ fun HomeScreen(
     navigateToTasks: () -> Unit,
     navigateToLogin: () -> Unit
 ) {
-    val viewState by viewModel.viewState.observeAsState(HomeViewState.Empty)
     val currentNavigateToLogin by rememberUpdatedState(newValue = navigateToLogin)
 
     ComposerFlowEventHandler(
@@ -159,7 +157,7 @@ fun HomeScreen(
             ) {
                 Text(
                     modifier = Modifier.fillParentMaxWidth(),
-                    text = "App Version: ${viewState.appVersion}",
+                    text = "App Version: ${viewModel.appVersion}",
                     maxLines = 1,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis
