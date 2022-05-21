@@ -1,9 +1,7 @@
 package com.patrykkosieradzki.todoist.wear.tile.features.home
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,6 +10,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -22,11 +21,9 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.items
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.patrykkosieradzki.composer.composables.ComposerFlowEventHandler
-import com.patrykkosieradzki.composer.core.Async
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
 @Composable
@@ -36,6 +33,7 @@ fun HomeScreen(
     listState: ScalingLazyListState,
     viewModel: HomeViewModel,
     navigateToAddTask: () -> Unit,
+    navigateToTasks: () -> Unit,
     navigateToLogin: () -> Unit
 ) {
     val viewState by viewModel.viewState.observeAsState(HomeViewState.Empty)
@@ -54,7 +52,7 @@ fun HomeScreen(
         state = listState,
         contentPadding = PaddingValues(horizontal = 15.dp)
     ) {
-        item {
+        item("title") {
             Text(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.primary,
@@ -62,7 +60,7 @@ fun HomeScreen(
             )
         }
 
-        item {
+        item("add-task") {
             Chip(
                 modifier = Modifier.padding(top = 10.dp),
                 colors = ChipDefaults.primaryChipColors(),
@@ -78,8 +76,22 @@ fun HomeScreen(
             )
         }
 
+        item("all-tasks") {
+            Chip(
+                colors = ChipDefaults.childChipColors(),
+                label = {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "All tasks",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                onClick = navigateToTasks
+            )
+        }
 
-        item {
+        item("account-header") {
             ListHeader(
                 modifier = Modifier.padding(top = 10.dp)
             ) {
@@ -90,6 +102,9 @@ fun HomeScreen(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+        }
+
+        item("settings") {
             Chip(
                 modifier = Modifier.padding(top = 10.dp),
                 colors = ChipDefaults.secondaryChipColors(),
@@ -101,8 +116,12 @@ fun HomeScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onClick = viewModel::onLogoutClicked
+                onClick = viewModel::onLogoutClicked,
+                enabled = false
             )
+        }
+
+        item("logout") {
             Chip(
                 colors = ChipDefaults.secondaryChipColors(),
                 label = {
@@ -114,6 +133,15 @@ fun HomeScreen(
                     )
                 },
                 onClick = viewModel::onLogoutClicked
+            )
+        }
+
+        item("app-version") {
+            Text(
+                modifier = Modifier.padding(top = 5.dp),
+                text = "App Version: ${viewState.appVersion}",
+                textAlign = TextAlign.Center,
+                color = Color.White,
             )
         }
     }
