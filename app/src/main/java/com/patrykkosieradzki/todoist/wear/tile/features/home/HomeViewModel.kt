@@ -2,63 +2,32 @@ package com.patrykkosieradzki.todoist.wear.tile.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.patrykkosieradzki.composer.core.Async
 import com.patrykkosieradzki.composer.core.event.ComposerFlowEvent
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
-import com.patrykkosieradzki.todoist.wear.tile.domain.model.TodoistTask
-import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.GetAllTasksUseCase
 import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.mapLatest
 import timber.log.Timber
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllTasksUseCase: GetAllTasksUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     val navigateToLogin = ComposerFlowEvent<Unit>()
 
-    private val tasksState = MutableStateFlow<Async<List<TodoistTask>>>(Async.Loading())
-    private val appVersionState = MutableStateFlow("")
+    private val appVersionState = MutableStateFlow("1.0.0")
 
-    val viewState = combine(
-        tasksState,
-        appVersionState
-    ) { tasks, appVersion ->
+    val viewState = appVersionState.mapLatest {
         HomeViewState(
-            tasks = tasks,
-            appVersion = appVersion
+            appVersion = it
         )
     }.asLiveData()
-
-    init {
-        loadTasks()
-    }
-
-    private fun loadTasks() {
-        viewModelScope.launchWithExceptionHandler(
-            block = {
-                tasksState.update { Async.Loading() }
-                val tasks = getAllTasksUseCase.invoke()
-                tasksState.update { Async.Success(tasks) }
-            },
-            onFailure = { throwable ->
-                Timber.e(throwable, "Error during loading tasks")
-                tasksState.update { Async.Fail(throwable) }
-            }
-        )
-    }
-
-    fun onItemChecked(item: TodoistTask) {
-//        tasksState.update { Async.Success(tasks) }
-    }
 
     fun onLogoutClicked() {
         viewModelScope.launchWithExceptionHandler(
@@ -75,12 +44,10 @@ class HomeViewModel @Inject constructor(
 }
 
 data class HomeViewState(
-    val tasks: Async<List<TodoistTask>>,
     val appVersion: String
 ) {
     companion object {
         val Empty = HomeViewState(
-            tasks = Async.Uninitialized,
             appVersion = ""
         )
     }

@@ -17,12 +17,15 @@ import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashViewModel
+import com.patrykkosieradzki.todoist.wear.tile.features.tasks.TaskListScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.tasks.TaskListViewModel
 
 private object AppRoutes {
     const val splashScreen = "/splash"
     const val loginScreen = "/login"
     const val homeScreen = "/home"
 
+    const val tasksScreen = "/tasks"
     const val addTaskScreen = "/add-task"
 }
 
@@ -94,6 +97,7 @@ fun AppNavGraph() {
             val viewModel = hiltViewModel<HomeViewModel>()
 
             HomeScreen(
+                focusRequester = it.viewModel.focusRequester,
                 listState = it.scrollableState,
                 viewModel = viewModel,
                 navigateToAddTask = {
@@ -113,6 +117,19 @@ fun AppNavGraph() {
             route = AppRoutes.addTaskScreen
         ) {
             AddTaskScreen()
+        }
+
+        scalingLazyColumnComposable(
+            route = AppRoutes.homeScreen,
+            scrollStateBuilder = { ScalingLazyListState() }
+        ) {
+            val viewModel = hiltViewModel<TaskListViewModel>()
+
+            TaskListScreen(
+                focusRequester = it.viewModel.focusRequester,
+                listState = it.scrollableState,
+                viewModel = viewModel
+            )
         }
     }
 }
