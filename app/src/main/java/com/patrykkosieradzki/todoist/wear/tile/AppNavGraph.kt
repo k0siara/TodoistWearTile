@@ -103,6 +103,9 @@ fun AppNavGraph() {
                 navigateToAddTask = {
                     navController.navigate(AppRoutes.addTaskScreen)
                 },
+                navigateToTasks = {
+                    navController.navigate(AppRoutes.tasksScreen)
+                },
                 navigateToLogin = {
                     navController.navigate(AppRoutes.loginScreen) {
                         popUpTo(AppRoutes.homeScreen) {
@@ -120,7 +123,7 @@ fun AppNavGraph() {
         }
 
         scalingLazyColumnComposable(
-            route = AppRoutes.homeScreen,
+            route = AppRoutes.tasksScreen,
             scrollStateBuilder = { ScalingLazyListState() }
         ) {
             val viewModel = hiltViewModel<TaskListViewModel>()

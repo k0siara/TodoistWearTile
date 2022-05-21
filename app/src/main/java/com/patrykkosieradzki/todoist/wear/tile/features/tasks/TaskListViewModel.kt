@@ -3,31 +3,39 @@ package com.patrykkosieradzki.todoist.wear.tile.features.tasks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.patrykkosieradzki.composer.core.Async
 import com.patrykkosieradzki.composer.core.state.UiState
 import com.patrykkosieradzki.composer.core.state.UiStateManager
 import com.patrykkosieradzki.composer.core.state.uiStateManagerDelegate
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
 import com.patrykkosieradzki.todoist.wear.tile.domain.model.TodoistTask
-import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.GetAllTasksUseCase
+import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveTasks
+import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.FetchAllTasksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TaskListViewModel @Inject constructor(
-    private val getAllTasksUseCase: GetAllTasksUseCase
+    observeTasks: ObserveTasks,
+    private val fetchAllTasksUseCase: FetchAllTasksUseCase
 ) : ViewModel(),
     UiStateManager by uiStateManagerDelegate(initialState = UiState.Loading) {
 
-    private val tasksState = MutableStateFlow<Async<List<TodoistTask>>>(Async.Loading())
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val viewState = tasksState.mapLatest { TaskListViewState(it) }.asLiveData()
+    val taskListComponents = observeTasks.flow
+        .mapLatest { tasks ->
+            when {
+                tasks == null -> emptyList()
+                tasks.isEmpty() -> listOf(TaskListScreenComponent.AddTaskButton)
+                else -> {
+                    val addButton = listOf(TaskListScreenComponent.AddTaskButton)
+                    val taskItems = tasks.map { TaskListScreenComponent.TaskItem(it) }
+                    addButton + taskItems
+                }
+            }
+        }.asLiveData()
 
     init {
         loadTasks()
@@ -36,13 +44,13 @@ class TaskListViewModel @Inject constructor(
     private fun loadTasks() {
         viewModelScope.launchWithExceptionHandler(
             block = {
-                tasksState.update { Async.Loading() }
-                val tasks = getAllTasksUseCase.invoke()
-                tasksState.update { Async.Success(tasks) }
+                updateUiStateToLoading()
+                fetchAllTasksUseCase.invoke()
+                updateUiStateToSuccess()
             },
             onFailure = { throwable ->
                 Timber.e(throwable, "Error during loading tasks")
-                tasksState.update { Async.Fail(throwable) }
+                updateUiStateToFailure(throwable)
             }
         )
     }
@@ -52,12 +60,7 @@ class TaskListViewModel @Inject constructor(
     }
 }
 
-data class TaskListViewState(
-    val tasks: Async<List<TodoistTask>>
-) {
-    companion object {
-        val Empty = TaskListViewState(
-            tasks = Async.Uninitialized
-        )
-    }
+sealed class TaskListScreenComponent {
+    object AddTaskButton : TaskListScreenComponent()
+    data class TaskItem(val todoistTask: TodoistTask) : TaskListScreenComponent()
 }
