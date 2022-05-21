@@ -17,7 +17,6 @@ android {
         targetSdk 32
         versionCode 1000000
         versionName "$appVersion.major.$appVersion.minor.$appVersion.patch.$appVersion.build"
-
     }
 
     buildTypes {

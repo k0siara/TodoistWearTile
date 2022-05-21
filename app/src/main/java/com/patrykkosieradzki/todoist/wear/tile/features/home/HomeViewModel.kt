@@ -12,8 +12,8 @@ import timber.log.Timber
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val logoutUseCase: LogoutUseCase,
-    private val versionProvider: VersionProvider
+    versionProvider: VersionProvider,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     val navigateToLogin = ComposerFlowEvent<Unit>()

@@ -32,10 +32,11 @@ class LoginUseCase @Inject constructor(
                     tokenStorage.accessToken = accessToken
                 }
             }
-        } catch (we: WearException) {
-            throw we
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: WearException) {
+            throw e
         } catch (e: Exception) {
-            (e as? CancellationException)?.let { throw it }
             throw WearException.UnknownException(cause = e)
         }
     }

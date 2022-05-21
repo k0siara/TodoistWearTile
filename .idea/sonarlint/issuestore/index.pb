@@ -62,8 +62,6 @@ Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/model/TodoistT
 `app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/home/TodoistTaskItemWidget.kt,5/8/58cbeac8f2fdcaba65bf312029bb3a8aee29b3be
 á
 Wapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/login/LoginScreen.kt,2/5/2524b4d15a765c6702b519dd30e4188b94ebed63
-x
-Happ/src/main/java/com/patrykkosieradzki/todoist/wear/tile/AppNavGraph.kt,a/9/a9a0b236cf92724a4eaab381f860224a358d04c8
 ê
 `app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/usecase/FetchAllTasksUseCase.kt,7/7/771a055c8d527fba31e1fd457677f2700e82f3b0
 â

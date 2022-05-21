@@ -21,30 +21,18 @@ class OAuthManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val verificationCodeGenerator: VerificationCodeGenerator
 ) {
-    sealed class AuthorizationStatus {
-        data class Success(val code: String) : AuthorizationStatus()
-        object PhoneUnavailable : AuthorizationStatus()
-        object UnsupportedWatch : AuthorizationStatus()
-    }
-
-    sealed class OAuthManagerException(message: String, cause: Throwable? = null) :
-        Exception(message, cause) {
-
-        class UnknownException(message: String, cause: Throwable?) :
-            OAuthManagerException(message, cause)
-    }
-
     private val remoteAuthClient = RemoteAuthClient.create(context)
 
     suspend fun authorize(clientId: String): AuthorizationStatus {
         val verificationCode = verificationCodeGenerator.createVerificationCode()
-        val oauthUriStr = OAUTH_AUTHORIZE_URL_TEMPLATE.format(
-            READ_WRITE_SCOPE,
-            verificationCode
-        )
+
+        val uri = Uri.Builder()
+            .encodedPath(OAUTH_AUTHORIZE_URL)
+            .appendQueryParameter(SCOPE_QUERY_PARAM, READ_WRITE_SCOPE)
+            .build()
 
         val request = OAuthRequest.Builder(context)
-            .setAuthProviderUrl(Uri.parse(oauthUriStr))
+            .setAuthProviderUrl(uri)
             .setClientId(clientId)
             .setCodeChallenge(CodeChallenge(CodeVerifier(verificationCode)))
             .build()
@@ -107,9 +95,22 @@ class OAuthManager @Inject constructor(
         remoteAuthClient.close()
     }
 
+    sealed class AuthorizationStatus {
+        data class Success(val code: String) : AuthorizationStatus()
+        object PhoneUnavailable : AuthorizationStatus()
+        object UnsupportedWatch : AuthorizationStatus()
+    }
+
+    sealed class OAuthManagerException(message: String, cause: Throwable? = null) :
+        Exception(message, cause) {
+
+        class UnknownException(message: String, cause: Throwable?) :
+            OAuthManagerException(message, cause)
+    }
+
     companion object {
-        private const val OAUTH_AUTHORIZE_URL_TEMPLATE =
-            "https://todoist.com/oauth/authorize?scope=%s&state=%s"
+        private const val OAUTH_AUTHORIZE_URL = "https://todoist.com/oauth/authorize"
+        private const val SCOPE_QUERY_PARAM = "scope"
         private const val READ_WRITE_SCOPE = "data:read_write"
         private const val STATE_QUERY_PARAM = "state"
         private const val CODE_QUERY_PARAM = "code"

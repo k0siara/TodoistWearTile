@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -21,7 +19,6 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
-import com.patrykkosieradzki.composer.composables.ComposerFlowEventHandler
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
 @Composable
@@ -32,15 +29,8 @@ fun HomeScreen(
     viewModel: HomeViewModel,
     navigateToAddTask: () -> Unit,
     navigateToTasks: () -> Unit,
-    navigateToLogin: () -> Unit
+    navigateToConfirmLogout: () -> Unit
 ) {
-    val currentNavigateToLogin by rememberUpdatedState(newValue = navigateToLogin)
-
-    ComposerFlowEventHandler(
-        event = viewModel.navigateToLogin,
-        handleEvent = { _, _ -> currentNavigateToLogin.invoke() }
-    )
-
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -147,7 +137,7 @@ fun HomeScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onClick = viewModel::onLogoutClicked
+                onClick = navigateToConfirmLogout
             )
         }
 

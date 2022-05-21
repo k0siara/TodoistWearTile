@@ -26,8 +26,9 @@ class LogoutUseCase @Inject constructor(
             } else {
                 Timber.d("Access token not found during logout")
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
-            (e as? CancellationException)?.let { throw it }
             Timber.e(e, "Error during logging out")
         }
 
