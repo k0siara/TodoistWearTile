@@ -1,5 +1,6 @@
 package com.patrykkosieradzki.todoist.wear.tile.features.home
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,14 +11,12 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.ListHeader
-import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
@@ -50,14 +49,31 @@ fun HomeScreen(
             .scrollableColumn(focusRequester, listState),
         horizontalAlignment = Alignment.CenterHorizontally,
         state = listState,
-        contentPadding = PaddingValues(horizontal = 15.dp)
+        contentPadding = PaddingValues(start = 15.dp, top = 20.dp, end = 15.dp)
     ) {
         item("title") {
-            Text(
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.primary,
-                text = "You're logged in :)"
-            )
+            ListHeader(
+                modifier = Modifier.fillParentMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.fillParentMaxWidth()
+                ) {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "Hello, Patryk,",
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "anything TODO?",
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
 
         item("add-task") {
@@ -78,7 +94,8 @@ fun HomeScreen(
 
         item("all-tasks") {
             Chip(
-                colors = ChipDefaults.childChipColors(),
+                modifier = Modifier.padding(top = 10.dp),
+                colors = ChipDefaults.secondaryChipColors(),
                 label = {
                     Text(
                         modifier = Modifier.fillParentMaxWidth(),
@@ -99,6 +116,7 @@ fun HomeScreen(
                     modifier = Modifier.fillParentMaxWidth(),
                     text = "Account",
                     maxLines = 1,
+                    textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis
                 )
             }
@@ -106,12 +124,11 @@ fun HomeScreen(
 
         item("settings") {
             Chip(
-                modifier = Modifier.padding(top = 10.dp),
                 colors = ChipDefaults.secondaryChipColors(),
                 label = {
                     Text(
                         modifier = Modifier.fillParentMaxWidth(),
-                        text = "Settings",
+                        text = "Settings (in progress)",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -137,12 +154,17 @@ fun HomeScreen(
         }
 
         item("app-version") {
-            Text(
-                modifier = Modifier.padding(top = 5.dp),
-                text = "App Version: ${viewState.appVersion}",
-                textAlign = TextAlign.Center,
-                color = Color.White,
-            )
+            ListHeader(
+                modifier = Modifier.padding(top = 10.dp)
+            ) {
+                Text(
+                    modifier = Modifier.fillParentMaxWidth(),
+                    text = "App Version: ${viewState.appVersion}",
+                    maxLines = 1,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
