@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
 import com.patrykkosieradzki.todoist.wear.tile.domain.VersionProvider
-import com.patrykkosieradzki.todoist.wear.tile.domain.model.Project
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveLabels
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveProjects
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveTasks
@@ -33,22 +32,12 @@ class HomeViewModel @Inject constructor(
         observeLabels.flow,
         observeProjects.flow
     ) { user, tasks, labels, projects ->
-        val favoriteLabels = labels?.filter { it.isFavorite } ?: emptyList()
-        val favoriteLabelItems = favoriteLabels.map { label ->
-            val taskCount = tasks?.count { it.labels.contains(label.id) } ?: 0
-
-            FavoriteLabelItem(
-                id = label.id,
-                name = label.name,
-                taskCount = taskCount
-            )
-        }
-
-        HomeViewState(
-            firstName = user?.firstName ?: "...",
-            favoriteLabelItems = favoriteLabelItems,
-            favoriteProjects = projects?.filter { it.isFavorite } ?: emptyList(),
-            appVersion = versionProvider.versionName
+        HomeViewState.resolveFrom(
+            user = user,
+            tasks = tasks,
+            labels = labels,
+            projects = projects,
+            versionProvider = versionProvider
         )
     }.stateIn(
         scope = viewModelScope,
@@ -69,22 +58,6 @@ class HomeViewModel @Inject constructor(
                 Timber.e(throwable, "Error during sync on startup")
                 // TODO: show error state with retry?
             }
-        )
-    }
-}
-
-data class HomeViewState(
-    val firstName: String,
-    val favoriteLabelItems: List<FavoriteLabelItem>,
-    val favoriteProjects: List<Project>,
-    val appVersion: String
-) {
-    companion object {
-        val Empty = HomeViewState(
-            firstName = "",
-            favoriteLabelItems = emptyList(),
-            favoriteProjects = emptyList(),
-            appVersion = ""
         )
     }
 }

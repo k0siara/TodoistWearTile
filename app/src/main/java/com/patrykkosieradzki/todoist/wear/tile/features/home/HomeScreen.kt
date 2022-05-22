@@ -103,14 +103,14 @@ fun HomeScreen(
             )
         }
 
-        if (viewState.favoriteLabelItems.isNotEmpty()) {
-            item("favorite-labels-header") {
+        if (viewState.favoriteProjectComponents.isNotEmpty()) {
+            item("projects-header") {
                 ListHeader(
                     modifier = Modifier.padding(top = 10.dp)
                 ) {
                     Text(
                         modifier = Modifier.fillParentMaxWidth(),
-                        text = "Favorites",
+                        text = "Projects",
                         maxLines = 1,
                         textAlign = TextAlign.Center,
                         overflow = TextOverflow.Ellipsis
@@ -119,53 +119,131 @@ fun HomeScreen(
             }
 
             items(
-                items = viewState.favoriteProjects,
-                key = { it.id }
-            ) { project ->
-                Chip(
-                    colors = ChipDefaults.secondaryChipColors(),
-                    label = {
-                        Text(
-                            modifier = Modifier.fillParentMaxWidth(),
-                            text = project.name,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                items = viewState.favoriteProjectComponents,
+                key = { fpc ->
+                    when (fpc) {
+                        is FavoriteProjectComponent.Item -> fpc.id
+                        FavoriteProjectComponent.ShowAllButton -> "fpc-show-all-button"
+                    }
+                }
+            ) { fpc ->
+                when (fpc) {
+                    is FavoriteProjectComponent.Item -> {
+                        Chip(
+                            colors = ChipDefaults.secondaryChipColors(),
+                            label = {
+                                Row(
+                                    modifier = Modifier.fillParentMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        modifier = Modifier.weight(1f),
+                                        text = fpc.name,
+                                        maxLines = 1,
+                                        textAlign = TextAlign.Start,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+
+                                    Text(
+                                        text = "${fpc.taskCount}",
+                                        maxLines = 1,
+                                        textAlign = TextAlign.End,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                            },
+                            onClick = {}
                         )
-                    },
-                    onClick = {}
-                )
+                    }
+                    FavoriteProjectComponent.ShowAllButton -> {
+                        Chip(
+                            colors = ChipDefaults.gradientBackgroundChipColors(),
+                            label = {
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = "Show all",
+                                    maxLines = 1,
+                                    textAlign = TextAlign.Start,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            },
+                            onClick = {}
+                        )
+                    }
+                }
+            }
+        }
+
+        if (viewState.favoriteLabelComponents.isNotEmpty()) {
+            item("labels-header") {
+                ListHeader(
+                    modifier = Modifier.padding(top = 10.dp)
+                ) {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "Labels",
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
 
             items(
-                items = viewState.favoriteLabelItems,
-                key = { it.id }
-            ) { labelItem ->
-                Chip(
-                    colors = ChipDefaults.secondaryChipColors(),
-                    label = {
-                        Row(
-                            modifier = Modifier.fillParentMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                modifier = Modifier.weight(1f),
-                                text = labelItem.name,
-                                maxLines = 1,
-                                textAlign = TextAlign.Start,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                items = viewState.favoriteLabelComponents,
+                key = { flc ->
+                    when (flc) {
+                        is FavoriteLabelComponent.Item -> flc.id
+                        FavoriteLabelComponent.ShowAllButton -> "flc-show-all-button"
+                    }
+                }
+            ) { flc ->
+                when (flc) {
+                    is FavoriteLabelComponent.Item -> {
+                        Chip(
+                            colors = ChipDefaults.secondaryChipColors(),
+                            label = {
+                                Row(
+                                    modifier = Modifier.fillParentMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        modifier = Modifier.weight(1f),
+                                        text = flc.name,
+                                        maxLines = 1,
+                                        textAlign = TextAlign.Start,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
 
-                            Text(
-                                text = "${labelItem.taskCount}",
-                                maxLines = 1,
-                                textAlign = TextAlign.End,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    },
-                    onClick = {}
-                )
+                                    Text(
+                                        text = "${flc.taskCount}",
+                                        maxLines = 1,
+                                        textAlign = TextAlign.End,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                            },
+                            onClick = {}
+                        )
+                    }
+                    FavoriteLabelComponent.ShowAllButton -> {
+                        Chip(
+                            colors = ChipDefaults.gradientBackgroundChipColors(),
+                            label = {
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = "Show all",
+                                    maxLines = 1,
+                                    textAlign = TextAlign.Start,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            },
+                            onClick = {}
+                        )
+                    }
+                }
             }
         }
 
