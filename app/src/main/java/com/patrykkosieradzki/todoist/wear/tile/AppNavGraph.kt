@@ -13,6 +13,7 @@ import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistC
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
 import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
 import com.patrykkosieradzki.todoist.wear.tile.features.addtask.AddTaskScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.addtask.AddTaskViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.home.confirmlogout.ConfirmLogoutScreen
@@ -157,7 +158,9 @@ fun NavGraphBuilder.includeConfirmLogoutScreen(
 fun NavGraphBuilder.includeAddTaskScreen() = composable(
     route = AppRoutes.addTaskScreen
 ) {
-    AddTaskScreen()
+    val viewModel = hiltViewModel<AddTaskViewModel>()
+
+    AddTaskScreen(viewModel = viewModel)
 }
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)

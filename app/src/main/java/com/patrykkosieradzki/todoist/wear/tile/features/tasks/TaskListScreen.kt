@@ -26,7 +26,7 @@ import androidx.wear.compose.material.items
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.patrykkosieradzki.composer.composables.UiStateView
-import com.patrykkosieradzki.todoist.wear.tile.features.home.TodoistTaskItemWidget
+import com.patrykkosieradzki.todoist.wear.tile.features.home.widgets.TodoistTaskItemWidget
 
 @Composable
 fun TaskListScreen(

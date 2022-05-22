@@ -11,6 +11,10 @@ sealed class WearException(
         cause = cause
     )
 
+    class MissingActivityException : WearException(
+        message = "Activity is missing"
+    )
+
     class PhoneUnavailableException : WearException(
         message = "Unable to reach mobile device"
     )

@@ -17,12 +17,6 @@ A
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-z
-Japp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/WearException.kt,0/e/0eb66ab5833c5d93ca1ecf6e5246be1a2b7197ac
-y
-Iapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/MainActivity.kt,e/2/e255632aaa5f0915ebd9b5fbce7e814a5c8f16ec
-â
-Yapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/extensions/ContextExtensions.kt,b/7/b70fde5ee33995c20d67bcff3a0bea468ac03c1b
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
@@ -36,8 +30,6 @@ Dapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/WearApp.kt,0/1/012be
 Zapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/GetAccessTokenRequest.kt,c/9/c938b93fb1f6f4bec9c1183c35e57caa5d567b65
 ç
 ]app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/usecase/IsLoggedInUseCase.kt,4/2/42db69407f49d04a23efc2dfa9fe5543da22c713
-ä
-Zapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/login/LoginViewModel.kt,3/3/3347da93ef8c0a6397c05efc9fee6c868f3195b6
 å
 \app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/splash/SplashViewModel.kt,c/8/c8cd8b990da0b821efddf280168cf91f184b079a
 
@@ -52,11 +44,5 @@ Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/TokenIntercep
 Papp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/TokenStorage.kt,7/e/7ee032481fae459c2852d787a73990f45f08e267
 ç
 ]app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/VerificationCodeGenerator.kt,2/1/21f7e02ec16ac889a29e9016ad5d3fa7ac9ca87f
-é
-^app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/addtask/AddTaskViewModel.kt,b/7/b7c182dc98cfb6059e16fc14f6ab5e6d83105179
-ã
-[app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/addtask/AddTaskScreen.kt,5/1/51d88e04075bfd0f97c673696a5f2c9c75e941ef
-á
-Wapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/login/LoginScreen.kt,2/5/2524b4d15a765c6702b519dd30e4188b94ebed63
 ê
 `app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/usecase/FetchAllTasksUseCase.kt,7/7/771a055c8d527fba31e1fd457677f2700e82f3b0

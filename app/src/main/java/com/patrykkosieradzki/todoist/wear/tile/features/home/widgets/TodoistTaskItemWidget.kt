@@ -1,4 +1,4 @@
-package com.patrykkosieradzki.todoist.wear.tile.features.home
+package com.patrykkosieradzki.todoist.wear.tile.features.home.widgets
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

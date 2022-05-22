@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -31,6 +33,8 @@ fun HomeScreen(
     navigateToTasks: () -> Unit,
     navigateToConfirmLogout: () -> Unit
 ) {
+    val viewState by viewModel.viewState.observeAsState(HomeViewState.Empty)
+
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +52,7 @@ fun HomeScreen(
                 ) {
                     Text(
                         modifier = Modifier.fillParentMaxWidth(),
-                        text = "Hello, Patryk,",
+                        text = "Hello, ${viewState.firstName},",
                         maxLines = 1,
                         textAlign = TextAlign.Center,
                         overflow = TextOverflow.Ellipsis
@@ -147,7 +151,7 @@ fun HomeScreen(
             ) {
                 Text(
                     modifier = Modifier.fillParentMaxWidth(),
-                    text = "App Version: ${viewModel.appVersion}",
+                    text = "Version: ${viewState.appVersion}",
                     maxLines = 1,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis

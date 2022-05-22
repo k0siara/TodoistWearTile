@@ -10,7 +10,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -22,7 +21,6 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import com.patrykkosieradzki.composer.composables.ComposerFlowEventHandler
 import com.patrykkosieradzki.composer.composables.UiStateView
-import com.patrykkosieradzki.todoist.wear.tile.extensions.showConfirmationOverlay
 
 @Composable
 fun LoginScreen(
@@ -98,8 +96,6 @@ private fun SuccessState(
     listState: ScalingLazyListState,
     viewModel: LoginViewModel
 ) {
-    val context = LocalContext.current
-
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,12 +119,7 @@ private fun SuccessState(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onClick = {
-                    viewModel.onLoginClicked()
-                    context.showConfirmationOverlay(
-                        message = "Open your phone to authorize"
-                    )
-                }
+                onClick = viewModel::onLoginClicked
             )
         }
     }
