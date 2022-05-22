@@ -2,6 +2,7 @@ package com.patrykkosieradzki.todoist.wear.tile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,6 +17,7 @@ import com.patrykkosieradzki.todoist.wear.tile.features.addtask.AddTaskScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.home.HomeViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.home.confirmlogout.ConfirmLogoutScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.home.confirmlogout.ConfirmLogoutViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.login.LoginViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
@@ -52,7 +54,7 @@ fun AppNavGraph() {
         includeLoginScreen(navController)
 
         includeHomeScreen(navController)
-        includeConfirmLogoutScreen()
+        includeConfirmLogoutScreen(navController)
 
         includeAddTaskScreen()
         includeTaskListScreen()
@@ -127,10 +129,26 @@ fun NavGraphBuilder.includeHomeScreen(
     )
 }
 
-fun NavGraphBuilder.includeConfirmLogoutScreen() = composable(
+fun NavGraphBuilder.includeConfirmLogoutScreen(
+    navController: NavController
+) = composable(
     route = AppRoutes.confirmLogoutScreen
 ) {
-    ConfirmLogoutScreen()
+    val viewModel = hiltViewModel<ConfirmLogoutViewModel>()
+
+    ConfirmLogoutScreen(
+        viewModel = viewModel,
+        navigateBack = {
+            navController.navigateUp()
+        },
+        navigateToLogin = {
+            navController.navigate(AppRoutes.loginScreen) {
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
+        }
+    )
 }
 
 fun NavGraphBuilder.includeAddTaskScreen() = composable(

@@ -121,7 +121,7 @@ fun HomeScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onClick = viewModel::onLogoutClicked,
+                onClick = {},
                 enabled = false
             )
         }
