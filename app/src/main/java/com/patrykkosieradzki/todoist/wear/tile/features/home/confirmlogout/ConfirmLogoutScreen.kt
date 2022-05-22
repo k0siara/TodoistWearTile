@@ -55,9 +55,12 @@ fun ConfirmLogoutScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp)
+                .padding(top = 20.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
+                modifier = Modifier.size(ButtonDefaults.LargeButtonSize),
                 onClick = navigateBack,
                 colors = ButtonDefaults.secondaryButtonColors(),
                 enabled = true,
@@ -72,6 +75,7 @@ fun ConfirmLogoutScreen(
             }
 
             Button(
+                modifier = Modifier.size(ButtonDefaults.LargeButtonSize),
                 onClick = viewModel::onLogoutConfirmed,
                 colors = ButtonDefaults.primaryButtonColors(),
                 enabled = true,

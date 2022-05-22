@@ -29,6 +29,7 @@ class OAuthManager @Inject constructor(
         val uri = Uri.Builder()
             .encodedPath(OAUTH_AUTHORIZE_URL)
             .appendQueryParameter(SCOPE_QUERY_PARAM, READ_WRITE_SCOPE)
+            .appendQueryParameter(STATE_QUERY_PARAM, verificationCode)
             .build()
 
         val request = OAuthRequest.Builder(context)
@@ -49,9 +50,9 @@ class OAuthManager @Inject constructor(
                         runCatching {
                             val url = response.responseUrl ?: throw IllegalStateException()
                             val state = url.getQueryParameter(STATE_QUERY_PARAM)
-                                ?: throw IllegalStateException()
+                                ?: throw IllegalStateException("No state")
                             val code = url.getQueryParameter(CODE_QUERY_PARAM)
-                                ?: throw IllegalStateException()
+                                ?: throw IllegalStateException("No code")
 
                             if (state != verificationCode) {
                                 throw IllegalStateException()

@@ -16,7 +16,7 @@ import timber.log.Timber
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     versionProvider: VersionProvider,
-    private val observeUser: ObserveUser,
+    observeUser: ObserveUser,
     private val performSyncUseCase: PerformSyncUseCase
 ) : ViewModel() {
 
