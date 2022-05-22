@@ -10,6 +10,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.ensureActive
 
 interface WearManagerHost {
     fun attach(activity: Activity)
@@ -51,13 +53,19 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
             }.showOn(activity)
     }
 
+    @OptIn(InternalCoroutinesApi::class)
     override suspend fun getTextFromSpeechAsync(): Deferred<String?> {
         return CompletableDeferred<String?>().also { deferred ->
-            if (currentTextFromSpeechDeffered != null) {
+            val currentDeferred = currentTextFromSpeechDeffered
+            if (currentDeferred != null && currentDeferred.isActive) {
                 deferred.completeExceptionally(IllegalStateException("Already requested"))
                 return@also
             }
             currentTextFromSpeechDeffered = deferred
+            currentTextFromSpeechDeffered?.invokeOnCompletion(onCancelling = true) {
+                currentTextFromSpeechDeffered = null
+            }
+
             try {
                 val activity = activityRef?.get() ?: throw WearException.MissingActivityException()
                 val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -67,7 +75,9 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
                     )
                 }
                 activity.startActivityForResult(intent, GET_TEXT_FROM_SPEECH_REQUEST_CODE)
+                deferred.ensureActive()
             } catch (e: Exception) {
+                deferred.ensureActive()
                 deferred.completeExceptionally(e)
                 currentTextFromSpeechDeffered = null
             }
@@ -91,6 +101,7 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
         if (requestCode == 21) {
             // Handle result and errors
             currentTextFromSpeechDeffered?.complete("text")
+            currentTextFromSpeechDeffered = null
             return true
         }
 
