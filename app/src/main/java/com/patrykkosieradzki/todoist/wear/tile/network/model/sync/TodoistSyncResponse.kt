@@ -1,8 +1,17 @@
 package com.patrykkosieradzki.todoist.wear.tile.network.model.sync
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class TodoistSyncResponse(
-    val user: TodoistSyncUserResponse
+
+    @Json(name = "user")
+    val user: TodoistSyncUserResponse,
+
+    @Json(name = "labels")
+    val labels: List<LabelResponse>,
+
+    @Json(name = "projects")
+    val projects: List<ProjectResponse>
 )

@@ -4,7 +4,9 @@ enum class TodoistSyncResource(
     val value: String
 ) {
     ALL("all"),
-    USER("user")
+    USER("user"),
+    LABELS("labels"),
+    PROJECTS("projects")
 }
 
 data class TodoistSyncResourceType(

@@ -19,8 +19,10 @@ import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.items
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
+import com.patrykkosieradzki.composer.utils.asLifecycleAwareState
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
 @Composable
@@ -33,7 +35,7 @@ fun HomeScreen(
     navigateToTasks: () -> Unit,
     navigateToConfirmLogout: () -> Unit
 ) {
-    val viewState by viewModel.viewState.observeAsState(HomeViewState.Empty)
+    val viewState by viewModel.viewState.asLifecycleAwareState()
 
     ScalingLazyColumn(
         modifier = Modifier
@@ -98,6 +100,58 @@ fun HomeScreen(
                 },
                 onClick = navigateToTasks
             )
+        }
+
+        if (viewState.favoriteLabels.isNotEmpty()) {
+            item("favorite-labels-header") {
+                ListHeader(
+                    modifier = Modifier.padding(top = 10.dp)
+                ) {
+                    Text(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        text = "Favorites",
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            items(
+                items = viewState.favoriteProjects,
+                key = { it.id }
+            ) { project ->
+                Chip(
+                    colors = ChipDefaults.secondaryChipColors(),
+                    label = {
+                        Text(
+                            modifier = Modifier.fillParentMaxWidth(),
+                            text = project.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    onClick = {}
+                )
+            }
+
+            items(
+                items = viewState.favoriteLabels,
+                key = { it.id }
+            ) { label ->
+                Chip(
+                    colors = ChipDefaults.secondaryChipColors(),
+                    label = {
+                        Text(
+                            modifier = Modifier.fillParentMaxWidth(),
+                            text = label.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    onClick = {}
+                )
+            }
         }
 
         item("account-header") {
