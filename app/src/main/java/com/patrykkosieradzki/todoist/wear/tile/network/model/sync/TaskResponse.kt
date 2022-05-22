@@ -8,10 +8,10 @@ data class TaskResponse(
     @Json(name = "id")
     val id: String,
 
-    @Json(name = "projectId")
+    @Json(name = "project_id")
     val projectId: String?,
 
-    @Json(name = "sectionId")
+    @Json(name = "section_id")
     val sectionId: String?,
 
     @Json(name = "labels")
@@ -26,7 +26,7 @@ data class TaskResponse(
     @Json(name = "description")
     val description: String,
 
-    @Json(name = "commentCount")
+    @Json(name = "comment_count")
     val commentCount: Int?,
 
     @Json(name = "assignee")

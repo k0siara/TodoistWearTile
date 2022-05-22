@@ -6,16 +6,19 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
@@ -24,6 +27,7 @@ import androidx.wear.compose.material.items
 import com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.patrykkosieradzki.composer.utils.asLifecycleAwareState
+import com.patrykkosieradzki.todoist.wear.tile.R
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
 @Composable
@@ -153,6 +157,13 @@ fun HomeScreen(
                                     )
                                 }
                             },
+                            icon = {
+                                Icon(
+                                    modifier = Modifier.size(ChipDefaults.IconSize),
+                                    painter = painterResource(id = R.drawable.ic_project),
+                                    contentDescription = "label"
+                                )
+                            },
                             onClick = {}
                         )
                     }
@@ -224,6 +235,13 @@ fun HomeScreen(
                                         overflow = TextOverflow.Ellipsis
                                     )
                                 }
+                            },
+                            icon = {
+                                Icon(
+                                    modifier = Modifier.size(ChipDefaults.IconSize),
+                                    painter = painterResource(id = R.drawable.ic_label),
+                                    contentDescription = "label"
+                                )
                             },
                             onClick = {}
                         )
