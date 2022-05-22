@@ -2,7 +2,6 @@ package com.patrykkosieradzki.todoist.wear.tile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -24,6 +23,8 @@ import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.splash.SplashViewModel
 import com.patrykkosieradzki.todoist.wear.tile.features.tasks.TaskListScreen
 import com.patrykkosieradzki.todoist.wear.tile.features.tasks.TaskListViewModel
+import com.patrykkosieradzki.todoist.wear.tile.features.tasks.details.TaskDetailsScreen
+import com.patrykkosieradzki.todoist.wear.tile.features.tasks.details.TaskDetailsViewModel
 
 private object AppRoutes {
     const val splashScreen = "/splash"
@@ -32,8 +33,9 @@ private object AppRoutes {
     const val homeScreen = "/home"
     const val confirmLogoutScreen = "/confirmLogout"
 
-    const val tasksScreen = "/tasks"
     const val addTaskScreen = "/add-task"
+    const val tasksScreen = "/tasks"
+    const val taskDetailsScreen = "/tasks-details/{taskId}"
 }
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
@@ -57,7 +59,8 @@ fun AppNavGraph() {
         includeConfirmLogoutScreen(navController)
 
         includeAddTaskScreen()
-        includeTaskListScreen()
+        includeTaskListScreen(navController)
+        includeTaskDetailsScreen()
     }
 }
 
@@ -158,7 +161,9 @@ fun NavGraphBuilder.includeAddTaskScreen() = composable(
 }
 
 @OptIn(ExperimentalHorologistComposeLayoutApi::class)
-fun NavGraphBuilder.includeTaskListScreen() = scalingLazyColumnComposable(
+fun NavGraphBuilder.includeTaskListScreen(
+    navController: NavController
+) = scalingLazyColumnComposable(
     route = AppRoutes.tasksScreen,
     scrollStateBuilder = { ScalingLazyListState() }
 ) {
@@ -167,8 +172,22 @@ fun NavGraphBuilder.includeTaskListScreen() = scalingLazyColumnComposable(
     TaskListScreen(
         focusRequester = it.viewModel.focusRequester,
         listState = it.scrollableState,
-        viewModel = viewModel
+        viewModel = viewModel,
+        navigateToAddTask = {
+            navController.navigate(AppRoutes.addTaskScreen)
+        },
+        navigateToTaskDetails = { taskId ->
+            // TODO: Implement navigation with encoding and base64
+        }
     )
+}
+
+fun NavGraphBuilder.includeTaskDetailsScreen() = composable(
+    route = AppRoutes.tasksScreen
+) {
+    val viewModel = hiltViewModel<TaskDetailsViewModel>()
+
+    TaskDetailsScreen(viewModel = viewModel)
 }
 
 @Preview

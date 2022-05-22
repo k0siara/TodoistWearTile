@@ -56,15 +56,7 @@ Papp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/TokenStorage.k
 ^app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/addtask/AddTaskViewModel.kt,b/7/b7c182dc98cfb6059e16fc14f6ab5e6d83105179
 ã
 [app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/addtask/AddTaskScreen.kt,5/1/51d88e04075bfd0f97c673696a5f2c9c75e941ef
-ê
-`app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/home/TodoistTaskItemWidget.kt,5/8/58cbeac8f2fdcaba65bf312029bb3a8aee29b3be
 á
 Wapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/login/LoginScreen.kt,2/5/2524b4d15a765c6702b519dd30e4188b94ebed63
 ê
 `app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/usecase/FetchAllTasksUseCase.kt,7/7/771a055c8d527fba31e1fd457677f2700e82f3b0
-â
-Yapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/observer/ObserveTasks.kt,2/c/2cf9c03a6aa56490370ef2e7dbe6fe45a66edc08
-ç
-]app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/tasks/TaskListViewModel.kt,0/1/01252f91a943a050fe4fa8bb779978f01d988382
-î
-dapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/repository/TodoistCachedTasksRepository.kt,9/9/998d9c17143e7b52c9a4fee453e413b451e1c4d4

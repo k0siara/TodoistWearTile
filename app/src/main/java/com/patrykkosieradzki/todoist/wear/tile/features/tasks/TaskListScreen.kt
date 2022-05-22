@@ -33,7 +33,9 @@ fun TaskListScreen(
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester,
     listState: ScalingLazyListState,
-    viewModel: TaskListViewModel
+    viewModel: TaskListViewModel,
+    navigateToAddTask: () -> Unit,
+    navigateToTaskDetails: (taskId: String) -> Unit
 ) {
     UiStateView(
         uiStateManager = viewModel,
@@ -44,11 +46,16 @@ fun TaskListScreen(
             TaskListSuccess(
                 focusRequester = focusRequester,
                 listState = listState,
-                viewModel = viewModel
+                viewModel = viewModel,
+                navigateToAddTask = navigateToAddTask,
+                navigateToTaskDetails = navigateToTaskDetails
             )
         },
         renderOnFailure = { throwable ->
-            TaskListFailure(throwable)
+            TaskListFailure(
+                throwable = throwable,
+                onTryAgainClicked = viewModel::onTryAgainClicked
+            )
         }
     )
 }
@@ -79,7 +86,9 @@ private fun TaskListLoading() {
 private fun TaskListSuccess(
     focusRequester: FocusRequester,
     listState: ScalingLazyListState,
-    viewModel: TaskListViewModel
+    viewModel: TaskListViewModel,
+    navigateToAddTask: () -> Unit,
+    navigateToTaskDetails: (taskId: String) -> Unit
 ) {
     val taskListComponents by viewModel.taskListComponents.observeAsState(emptyList())
 
@@ -113,13 +122,14 @@ private fun TaskListSuccess(
                                 overflow = TextOverflow.Ellipsis
                             )
                         },
-                        onClick = {}
+                        onClick = navigateToAddTask
                     )
                 }
                 is TaskListScreenComponent.TaskItem -> {
                     TodoistTaskItemWidget(
                         modifier = Modifier.fillParentMaxWidth(),
-                        todoistTask = component.todoistTask
+                        todoistTask = component.todoistTask,
+                        onClick = { navigateToTaskDetails(component.todoistTask.id) }
                     )
                 }
             }
@@ -129,7 +139,8 @@ private fun TaskListSuccess(
 
 @Composable
 private fun TaskListFailure(
-    throwable: Throwable
+    throwable: Throwable,
+    onTryAgainClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

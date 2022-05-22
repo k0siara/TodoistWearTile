@@ -22,7 +22,7 @@ class TaskListViewModel @Inject constructor(
     observeTasks: ObserveTasks,
     private val fetchAllTasksUseCase: FetchAllTasksUseCase
 ) : ViewModel(),
-    UiStateManager by uiStateManagerDelegate(initialState = UiState.Loading) {
+    UiStateManager by uiStateManagerDelegate(initialState = UiState.Success) {
 
     val taskListComponents = observeTasks.flow
         .mapLatest { tasks ->
@@ -38,7 +38,9 @@ class TaskListViewModel @Inject constructor(
         }.asLiveData()
 
     init {
-        loadTasks()
+        if (observeTasks.isEmpty) {
+            loadTasks()
+        }
     }
 
     private fun loadTasks() {
@@ -53,6 +55,10 @@ class TaskListViewModel @Inject constructor(
                 updateUiStateToFailure(throwable)
             }
         )
+    }
+
+    fun onTryAgainClicked() {
+        loadTasks()
     }
 
     fun onItemChecked(item: TodoistTask) {
