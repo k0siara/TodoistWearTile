@@ -36,5 +36,3 @@ Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/TokenIntercep
 Papp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/TokenStorage.kt,7/e/7ee032481fae459c2852d787a73990f45f08e267
 ç
 ]app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/VerificationCodeGenerator.kt,2/1/21f7e02ec16ac889a29e9016ad5d3fa7ac9ca87f
-ê
-`app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/usecase/FetchAllTasksUseCase.kt,7/7/771a055c8d527fba31e1fd457677f2700e82f3b0

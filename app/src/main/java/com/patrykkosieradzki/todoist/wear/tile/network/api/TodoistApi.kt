@@ -2,7 +2,7 @@ package com.patrykkosieradzki.todoist.wear.tile.network.api
 
 import com.patrykkosieradzki.todoist.wear.tile.network.model.RevokeAccessTokenRequest
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TodoistSyncRequest
-import com.patrykkosieradzki.todoist.wear.tile.network.model.TodoistTaskResponse
+import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TaskResponse
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TodoistSyncResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -22,5 +22,5 @@ interface TodoistApi {
     ): Response<Unit>
 
     @GET("rest/v1/tasks")
-    suspend fun getAllTasks(): List<TodoistTaskResponse>
+    suspend fun getAllTasks(): List<TaskResponse>
 }

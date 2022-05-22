@@ -6,6 +6,7 @@ import com.patrykkosieradzki.todoist.wear.tile.domain.model.TodoistSyncToken
 import com.patrykkosieradzki.todoist.wear.tile.repository.CachedLabelsRepository
 import com.patrykkosieradzki.todoist.wear.tile.repository.CachedProjectsRepository
 import com.patrykkosieradzki.todoist.wear.tile.repository.CachedUserRepository
+import com.patrykkosieradzki.todoist.wear.tile.repository.TodoistCachedTasksRepository
 import com.patrykkosieradzki.todoist.wear.tile.repository.TodoistRepository
 import javax.inject.Inject
 import timber.log.Timber
@@ -14,7 +15,8 @@ class PerformSyncUseCase @Inject constructor(
     private val todoistRepository: TodoistRepository,
     private val cachedUserRepository: CachedUserRepository,
     private val cachedLabelsRepository: CachedLabelsRepository,
-    private val cachedProjectsRepository: CachedProjectsRepository
+    private val cachedProjectsRepository: CachedProjectsRepository,
+    private val cachedTasksRepository: TodoistCachedTasksRepository
 ) {
     suspend fun invoke() {
         // TODO: add full sync only after login
@@ -25,11 +27,14 @@ class PerformSyncUseCase @Inject constructor(
             resourceTypes = listOf(
                 TodoistSyncResourceType(TodoistSyncResource.USER),
                 TodoistSyncResourceType(TodoistSyncResource.LABELS),
-                TodoistSyncResourceType(TodoistSyncResource.PROJECTS)
+                TodoistSyncResourceType(TodoistSyncResource.PROJECTS),
+                TodoistSyncResourceType(TodoistSyncResource.TASKS),
             )
         )
+
         cachedUserRepository.cacheUser(data.user)
         cachedLabelsRepository.cacheLabels(data.labels)
         cachedProjectsRepository.cacheProjects(data.projects)
+        cachedTasksRepository.cacheTasks(data.tasks)
     }
 }

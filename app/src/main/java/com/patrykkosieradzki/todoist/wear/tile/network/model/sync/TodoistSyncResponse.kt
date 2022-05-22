@@ -13,5 +13,8 @@ data class TodoistSyncResponse(
     val labels: List<LabelResponse>,
 
     @Json(name = "projects")
-    val projects: List<ProjectResponse>
+    val projects: List<ProjectResponse>,
+
+    @Json(name = "items")
+    val tasks: List<TaskResponse>
 )

@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patrykkosieradzki.composer.extensions.launchWithExceptionHandler
 import com.patrykkosieradzki.todoist.wear.tile.domain.VersionProvider
-import com.patrykkosieradzki.todoist.wear.tile.domain.model.Label
 import com.patrykkosieradzki.todoist.wear.tile.domain.model.Project
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveLabels
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveProjects
+import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveTasks
 import com.patrykkosieradzki.todoist.wear.tile.domain.observer.ObserveUser
 import com.patrykkosieradzki.todoist.wear.tile.domain.usecase.PerformSyncUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +21,7 @@ import timber.log.Timber
 class HomeViewModel @Inject constructor(
     versionProvider: VersionProvider,
     observeUser: ObserveUser,
+    observeTasks: ObserveTasks,
     observeLabels: ObserveLabels,
     observeProjects: ObserveProjects,
     private val performSyncUseCase: PerformSyncUseCase
@@ -28,12 +29,24 @@ class HomeViewModel @Inject constructor(
 
     val viewState = combine(
         observeUser.flow,
+        observeTasks.flow,
         observeLabels.flow,
         observeProjects.flow
-    ) { user, labels, projects ->
+    ) { user, tasks, labels, projects ->
+        val favoriteLabels = labels?.filter { it.isFavorite } ?: emptyList()
+        val favoriteLabelItems = favoriteLabels.map { label ->
+            val taskCount = tasks?.count { it.labels.contains(label.id) } ?: 0
+
+            FavoriteLabelItem(
+                id = label.id,
+                name = label.name,
+                taskCount = taskCount
+            )
+        }
+
         HomeViewState(
             firstName = user?.firstName ?: "...",
-            favoriteLabels = labels?.filter { it.isFavorite } ?: emptyList(),
+            favoriteLabelItems = favoriteLabelItems,
             favoriteProjects = projects?.filter { it.isFavorite } ?: emptyList(),
             appVersion = versionProvider.versionName
         )
@@ -62,14 +75,14 @@ class HomeViewModel @Inject constructor(
 
 data class HomeViewState(
     val firstName: String,
-    val favoriteLabels: List<Label>,
+    val favoriteLabelItems: List<FavoriteLabelItem>,
     val favoriteProjects: List<Project>,
     val appVersion: String
 ) {
     companion object {
         val Empty = HomeViewState(
             firstName = "",
-            favoriteLabels = emptyList(),
+            favoriteLabelItems = emptyList(),
             favoriteProjects = emptyList(),
             appVersion = ""
         )

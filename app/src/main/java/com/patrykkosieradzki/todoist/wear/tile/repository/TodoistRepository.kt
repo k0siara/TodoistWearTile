@@ -9,7 +9,7 @@ import com.patrykkosieradzki.todoist.wear.tile.domain.model.TodoistTask
 import com.patrykkosieradzki.todoist.wear.tile.domain.model.User
 import com.patrykkosieradzki.todoist.wear.tile.network.api.TodoistApi
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TodoistSyncRequest
-import com.patrykkosieradzki.todoist.wear.tile.network.model.TodoistTaskResponse
+import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TaskResponse
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.LabelResponse
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.ProjectResponse
 import com.patrykkosieradzki.todoist.wear.tile.network.model.sync.TodoistSyncResponse
@@ -37,7 +37,8 @@ class TodoistRepository @Inject constructor(
 fun TodoistSyncResponse.toDomain() = TodoistSyncData(
     user = user.toDomain(),
     labels = labels.toDomain(),
-    projects = projects.toDomain()
+    projects = projects.toDomain(),
+    tasks = tasks.toDomain()
 )
 
 fun TodoistSyncUserResponse.toDomain() = User(
@@ -77,12 +78,13 @@ fun ProjectResponse.toDomain() = Project(
 
 
 @JvmName("toDomainTodoistTaskResponse")
-fun List<TodoistTaskResponse>.toDomain() = map { it.toDomain() }
+fun List<TaskResponse>.toDomain() = map { it.toDomain() }
 
-fun TodoistTaskResponse.toDomain() = TodoistTask(
+fun TaskResponse.toDomain() = TodoistTask(
     id = id,
     projectId = projectId,
     sectionId = sectionId,
+    labels = labels,
     parentId = parentId,
     content = content,
     description = description,
@@ -91,5 +93,5 @@ fun TodoistTaskResponse.toDomain() = TodoistTask(
     assigner = assigner,
     order = order,
     priority = priority,
-    url = url
+    url = url,
 )

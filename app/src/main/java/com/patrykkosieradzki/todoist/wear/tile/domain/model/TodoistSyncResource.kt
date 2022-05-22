@@ -6,7 +6,8 @@ enum class TodoistSyncResource(
     ALL("all"),
     USER("user"),
     LABELS("labels"),
-    PROJECTS("projects")
+    PROJECTS("projects"),
+    TASKS("items")
 }
 
 data class TodoistSyncResourceType(
