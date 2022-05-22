@@ -52,8 +52,6 @@ Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/network/TokenIntercep
 Papp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/TokenStorage.kt,7/e/7ee032481fae459c2852d787a73990f45f08e267
 ç
 ]app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/VerificationCodeGenerator.kt,2/1/21f7e02ec16ac889a29e9016ad5d3fa7ac9ca87f
-Ö
-Uapp/src/main/java/com/patrykkosieradzki/todoist/wear/tile/domain/model/TodoistTask.kt,3/f/3f368dc90d1f76d6cc529e77fa8426d1e195cdeb
 é
 ^app/src/main/java/com/patrykkosieradzki/todoist/wear/tile/features/addtask/AddTaskViewModel.kt,b/7/b7c182dc98cfb6059e16fc14f6ab5e6d83105179
 ã
