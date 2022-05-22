@@ -94,13 +94,25 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
         activityRef = null
         if (!willReattach) {
             // cancel requests
+            currentTextFromSpeechDeffered?.cancel()
+            currentTextFromSpeechDeffered = null
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        if (requestCode == 21) {
-            // Handle result and errors
-            currentTextFromSpeechDeffered?.complete("text")
+        if (requestCode == GET_TEXT_FROM_SPEECH_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    try {
+                        val text = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                            .let { results -> results?.get(0) }
+                        currentTextFromSpeechDeffered?.complete(text)
+                    } catch (e: Exception) {
+                        currentTextFromSpeechDeffered?.complete(null)
+                    }
+                }
+                else -> currentTextFromSpeechDeffered?.complete(null)
+            }
             currentTextFromSpeechDeffered = null
             return true
         }
