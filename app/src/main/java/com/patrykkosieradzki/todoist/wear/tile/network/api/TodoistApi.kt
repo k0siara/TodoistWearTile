@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 interface TodoistApi {
 
-    @GET("sync/v8/sync")
+    @POST("sync/v8/sync")
     suspend fun sync(
         @Body body: TodoistSyncRequest
     ): TodoistSyncResponse

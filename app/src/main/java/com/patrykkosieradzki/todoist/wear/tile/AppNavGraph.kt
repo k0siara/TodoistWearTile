@@ -186,7 +186,7 @@ fun NavGraphBuilder.includeTaskListScreen(
 }
 
 fun NavGraphBuilder.includeTaskDetailsScreen() = composable(
-    route = AppRoutes.tasksScreen
+    route = AppRoutes.taskDetailsScreen
 ) {
     val viewModel = hiltViewModel<TaskDetailsViewModel>()
 
