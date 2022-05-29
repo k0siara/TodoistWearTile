@@ -34,7 +34,7 @@ interface WearManager {
 class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
 
     private var activityRef: WeakReference<Activity>? = null
-    private var currentTextFromSpeechDeffered: CompletableDeferred<String?>? = null
+    private var currentTextFromSpeechDeferred: CompletableDeferred<String?>? = null
 
     override fun showConfirmationOverlay(
         type: Int,
@@ -56,14 +56,14 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
     @OptIn(InternalCoroutinesApi::class)
     override suspend fun getTextFromSpeechAsync(): Deferred<String?> {
         return CompletableDeferred<String?>().also { deferred ->
-            val currentDeferred = currentTextFromSpeechDeffered
+            val currentDeferred = currentTextFromSpeechDeferred
             if (currentDeferred != null && currentDeferred.isActive) {
                 deferred.completeExceptionally(IllegalStateException("Already requested"))
                 return@also
             }
-            currentTextFromSpeechDeffered = deferred
-            currentTextFromSpeechDeffered?.invokeOnCompletion(onCancelling = true) {
-                currentTextFromSpeechDeffered = null
+            currentTextFromSpeechDeferred = deferred
+            currentTextFromSpeechDeferred?.invokeOnCompletion(onCancelling = true) {
+                currentTextFromSpeechDeferred = null
             }
 
             try {
@@ -79,7 +79,7 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
             } catch (e: Exception) {
                 deferred.ensureActive()
                 deferred.completeExceptionally(e)
-                currentTextFromSpeechDeffered = null
+                currentTextFromSpeechDeferred = null
             }
         }
     }
@@ -94,8 +94,8 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
         activityRef = null
         if (!willReattach) {
             // cancel requests
-            currentTextFromSpeechDeffered?.cancel()
-            currentTextFromSpeechDeffered = null
+            currentTextFromSpeechDeferred?.cancel()
+            currentTextFromSpeechDeferred = null
         }
     }
 
@@ -106,14 +106,14 @@ class AndroidWearManager @Inject constructor() : WearManager, WearManagerHost {
                     try {
                         val text = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                             .let { results -> results?.get(0) }
-                        currentTextFromSpeechDeffered?.complete(text)
+                        currentTextFromSpeechDeferred?.complete(text)
                     } catch (e: Exception) {
-                        currentTextFromSpeechDeffered?.complete(null)
+                        currentTextFromSpeechDeferred?.complete(null)
                     }
                 }
-                else -> currentTextFromSpeechDeffered?.complete(null)
+                else -> currentTextFromSpeechDeferred?.complete(null)
             }
-            currentTextFromSpeechDeffered = null
+            currentTextFromSpeechDeferred = null
             return true
         }
 
